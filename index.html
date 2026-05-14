@@ -3,350 +3,1519 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UFLBarstool Mobile</title>
-
-<!-- ======================================================
-     FRAMEWORKS
-====================================================== -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-<!-- ======================================================
-     GLOBAL STYLES
-====================================================== -->
+<title>The Afterparty Pack</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#000;
-  --card:#0b0b0b;
-  --border:#1f1f1f;
-  --text:#fff;
-  --muted:#888;
-}
-*{box-sizing:border-box}
-body{
-  background:#000;
-  font-family:Inter,system-ui;
-  color:var(--text);
-}
-.app{
-  max-width:390px;
-  height:840px;
-  margin:20px auto;
-  background:#000;
-  border-radius:36px;
-  overflow:hidden;
-  border:1px solid #222;
-  box-shadow:0 0 80px rgba(255,255,255,.08);
-}
+  :root {
+    --bg: #0d0a14;
+    --surface: #161022;
+    --surface2: #1e1730;
+    --border: #2e2545;
+    --accent: #ff3cac;
+    --accent2: #7b2fff;
+    --accent3: #00f5d4;
+    --accent4: #ffe600;
+    --text: #f0ebff;
+    --muted: #7a6e9a;
+    --success: #00f5d4;
+    --danger: #ff3c3c;
+    --glow-pink: 0 0 30px rgba(255,60,172,0.4);
+    --glow-purple: 0 0 30px rgba(123,47,255,0.4);
+    --glow-teal: 0 0 30px rgba(0,245,212,0.4);
+  }
 
-/* ======================================================
-   HEADER
-====================================================== */
-.header{
-  padding:18px 18px 10px;
-}
-.header h1{
-  font-size:22px;
-  font-weight:700;
-}
-.header p{
-  font-size:12px;
-  color:var(--muted);
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ======================================================
-   PAGES
-====================================================== */
-.pages{
-  position:relative;
-  height:670px;
-}
-.page{
-  position:absolute;
-  inset:0;
-  overflow-y:auto;
-  padding:16px;
-  display:none;
-}
-.page.active{
-  display:block;
-  animation:fade .35s ease;
-}
-@keyframes fade{
-  from{opacity:.6;transform:translateY(8px)}
-  to{opacity:1;transform:none}
-}
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-/* ======================================================
-   UI COMPONENTS
-====================================================== */
-.section-title{
-  font-size:15px;
-  font-weight:600;
-  margin:14px 0 8px;
-}
-.card-ui{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:14px;
-  margin-bottom:14px;
-}
-.card-ui strong{
-  font-size:14px;
-  display:block;
-}
-.card-ui p{
-  font-size:12px;
-  color:var(--muted);
-  margin:0;
-}
-.row-ui{
-  display:flex;
-  justify-content:space-between;
-  font-size:13px;
-}
-.badge-ui{
-  border:1px solid #fff;
-  border-radius:999px;
-  padding:4px 12px;
-  font-size:11px;
-}
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(123,47,255,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 90%, rgba(255,60,172,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 50% 50%, rgba(0,245,212,0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-/* ======================================================
-   SKELETON
-====================================================== */
-.skeleton{
-  height:14px;
-  background:#222;
-  border-radius:6px;
-  animation:pulse 1.5s infinite;
-  margin-bottom:10px;
-}
-@keyframes pulse{
-  0%{opacity:.3}
-  50%{opacity:1}
-  100%{opacity:.3}
-}
+  .noise {
+    position: fixed;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
 
-/* ======================================================
-   TAB BAR
-====================================================== */
-.tabbar{
-  height:72px;
-  background:#050505;
-  border-top:1px solid #222;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-}
-.tabbar button{
-  background:none;
-  border:none;
-  color:#777;
-  font-size:11px;
-  transition:.2s;
-}
-.tabbar button.active{
-  color:#fff;
-}
-.tabbar button span{
-  display:block;
-  font-size:18px;
-}
+  #app {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-/* ======================================================
-   MODAL
-====================================================== */
-.modal-ui{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-.modal-ui.active{
-  display:flex;
-}
-.modal-box{
-  background:#0b0b0b;
-  border:1px solid #222;
-  border-radius:20px;
-  padding:20px;
-  width:90%;
-}
+  /* ── SCREENS ── */
+  .screen { display: none; width: 100%; max-width: 900px; padding: 24px 16px; }
+  .screen.active { display: block; animation: fadeUp 0.4s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── LOGO ── */
+  .logo-wrap {
+    text-align: center;
+    padding: 40px 0 20px;
+  }
+
+  .logo-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 12vw, 96px);
+    letter-spacing: 0.02em;
+    line-height: 0.9;
+    background: linear-gradient(135deg, #ff3cac 0%, #7b2fff 40%, #00f5d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 40px rgba(123,47,255,0.5));
+  }
+
+  .logo-sub {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(14px, 3vw, 20px);
+    color: var(--accent4);
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+    opacity: 0.9;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: var(--accent2); }
+
+  .card-glow {
+    box-shadow: var(--glow-purple);
+    border-color: var(--accent2);
+  }
+
+  /* ── INPUTS ── */
+  input[type="text"], textarea, select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-top: 8px;
+  }
+
+  input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255,60,172,0.15);
+  }
+
+  textarea { resize: vertical; min-height: 90px; }
+
+  label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 28px;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    box-shadow: 0 4px 24px rgba(255,60,172,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,60,172,0.5); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-secondary {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+  }
+  .btn-secondary:hover { border-color: var(--accent2); background: var(--surface); }
+
+  .btn-teal {
+    background: linear-gradient(135deg, var(--accent3), #00c9a8);
+    color: #0d0a14;
+    box-shadow: 0 4px 24px rgba(0,245,212,0.25);
+  }
+  .btn-teal:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,245,212,0.4); }
+
+  .btn-yellow {
+    background: var(--accent4);
+    color: #0d0a14;
+    box-shadow: 0 4px 24px rgba(255,230,0,0.25);
+  }
+  .btn-yellow:hover { transform: translateY(-2px); }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #ff3c3c, #c0000a);
+    color: #fff;
+  }
+
+  .btn-lg { font-size: 18px; padding: 18px 40px; border-radius: 16px; }
+  .btn-sm { font-size: 13px; padding: 9px 18px; }
+  .btn-full { width: 100%; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+  /* ── GAME PICKER ── */
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  .game-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .game-card:hover { border-color: var(--accent2); transform: translateY(-3px); box-shadow: var(--glow-purple); }
+  .game-card.selected { border-color: var(--accent); box-shadow: var(--glow-pink); background: rgba(255,60,172,0.08); }
+
+  .game-emoji { font-size: 40px; display: block; margin-bottom: 10px; }
+  .game-name { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .game-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* ── ROOM CODE ── */
+  .room-code-display {
+    text-align: center;
+    background: var(--surface2);
+    border: 2px dashed var(--accent);
+    border-radius: 20px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+
+  .room-code-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+  .room-code-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    letter-spacing: 0.12em;
+    color: var(--accent4);
+    text-shadow: 0 0 30px rgba(255,230,0,0.5);
+    line-height: 1;
+  }
+
+  .room-url { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* ── PLAYER LIST ── */
+  .player-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .player-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .player-chip.host { border-color: var(--accent4); color: var(--accent4); }
+  .player-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* ── PHASE BADGES ── */
+  .phase-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  .phase-playing { background: rgba(0,245,212,0.15); color: var(--accent3); border: 1px solid var(--accent3); }
+  .phase-voting { background: rgba(255,60,172,0.15); color: var(--accent); border: 1px solid var(--accent); }
+  .phase-results { background: rgba(255,230,0,0.15); color: var(--accent4); border: 1px solid var(--accent4); }
+  .phase-lobby { background: rgba(123,47,255,0.15); color: var(--accent2); border: 1px solid var(--accent2); }
+
+  /* ── SCOREBOARD ── */
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .score-row:last-child { border-bottom: none; }
+  .score-rank { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--muted); width: 32px; }
+  .score-rank.gold { color: var(--accent4); }
+  .score-rank.silver { color: #aaa; }
+  .score-rank.bronze { color: #cd7f32; }
+  .score-name { flex: 1; font-weight: 600; font-size: 16px; }
+  .score-pts { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--accent3); }
+
+  /* ── SUBMISSION CARDS ── */
+  .submission-card {
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .submission-card:hover { border-color: var(--accent2); transform: translateX(4px); }
+  .submission-card.selected { border-color: var(--accent); background: rgba(255,60,172,0.08); box-shadow: var(--glow-pink); }
+  .submission-card.winner { border-color: var(--accent4); background: rgba(255,230,0,0.05); }
+
+  .submission-text { font-size: 16px; line-height: 1.5; }
+  .submission-author { font-size: 12px; color: var(--muted); margin-top: 8px; font-weight: 600; }
+  .vote-count {
+    position: absolute; top: 14px; right: 14px;
+    background: var(--accent4);
+    color: #0d0a14;
+    border-radius: 100px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* ── ROAST TARGET ── */
+  .target-card {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255,60,172,0.08), rgba(123,47,255,0.08));
+    border: 2px solid var(--accent);
+    border-radius: 20px;
+    padding: 28px;
+    margin: 20px 0;
+    box-shadow: var(--glow-pink);
+  }
+
+  .target-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+
+  .target-job { font-size: 14px; color: var(--accent3); font-weight: 600; margin: 4px 0; }
+  .target-quirk { font-size: 14px; color: var(--muted); font-style: italic; }
+
+  /* ── BINGO CARD ── */
+  .bingo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+
+  .bingo-cell {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.3;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bingo-cell:hover { border-color: var(--accent2); }
+  .bingo-cell.marked {
+    background: rgba(0,245,212,0.15);
+    border-color: var(--accent3);
+    color: var(--accent3);
+  }
+  .bingo-cell.free {
+    background: rgba(255,230,0,0.1);
+    border-color: var(--accent4);
+    color: var(--accent4);
+    font-weight: 700;
+  }
+
+  /* ── ALIBI ── */
+  .crime-card {
+    background: rgba(255,60,60,0.06);
+    border: 2px solid #ff3c3c55;
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+
+  .crime-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #ff3c3c;
+    margin-bottom: 8px;
+  }
+
+  .crime-text { font-size: 17px; font-weight: 600; line-height: 1.5; }
+  .crime-meta { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+  .question-item {
+    background: var(--surface2);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 8px 0;
+    border-left: 3px solid var(--accent2);
+  }
+
+  .question-q { font-size: 14px; font-weight: 600; color: var(--text); }
+  .question-a { font-size: 14px; color: var(--accent3); margin-top: 6px; font-style: italic; }
+
+  /* ── FINISH MY LIE ── */
+  .fact-display {
+    background: var(--surface2);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 16px 0;
+    border-left: 4px solid var(--accent3);
+    font-size: 17px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .fact-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 12px;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    background: var(--surface2);
+    border-radius: 100px;
+    height: 6px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 100px;
+    transition: width 0.5s ease;
+  }
+
+  /* ── HEADING ── */
+  h1, h2, h3 { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em; }
+  h2 { font-size: 36px; }
+  h3 { font-size: 24px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  /* ── ALERTS ── */
+  .alert {
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 14px;
+    margin: 12px 0;
+    font-weight: 500;
+  }
+
+  .alert-info { background: rgba(123,47,255,0.1); border: 1px solid rgba(123,47,255,0.3); color: #c5a3ff; }
+  .alert-success { background: rgba(0,245,212,0.08); border: 1px solid rgba(0,245,212,0.3); color: var(--accent3); }
+  .alert-danger { background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.3); color: #ff7070; }
+  .alert-warn { background: rgba(255,230,0,0.08); border: 1px solid rgba(255,230,0,0.3); color: var(--accent4); }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* ── UTILITY ── */
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .gap-8 { gap: 8px; }
+  .gap-12 { gap: 12px; }
+  .gap-16 { gap: 16px; }
+  .mt-8 { margin-top: 8px; }
+  .mt-12 { margin-top: 12px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+  .mb-8 { margin-bottom: 8px; }
+  .text-center { text-align: center; }
+  .text-muted { color: var(--muted); }
+  .text-accent { color: var(--accent); }
+  .text-teal { color: var(--accent3); }
+  .text-yellow { color: var(--accent4); }
+
+  /* ── CONFETTI ── */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: fall linear forwards;
+    z-index: 999;
+    border-radius: 2px;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ── PULSE DOT ── */
+  .pulse-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent3);
+    display: inline-block;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* ── WAITING ── */
+  .waiting-animation {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .waiting-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+  .waiting-dot:nth-child(1) { background: var(--accent); animation-delay: 0s; }
+  .waiting-dot:nth-child(2) { background: var(--accent2); animation-delay: 0.15s; }
+  .waiting-dot:nth-child(3) { background: var(--accent3); animation-delay: 0.3s; }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    .game-grid { grid-template-columns: 1fr 1fr; }
+    .bingo-grid { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    .bingo-cell { font-size: 9px; padding: 8px 4px; min-height: 52px; }
+    .room-code-value { font-size: 52px; }
+  }
 </style>
 </head>
-
 <body>
+<div class="noise"></div>
+<div id="app">
 
-<div class="app animate__animated animate__fadeInUp">
+  <!-- ── HOME SCREEN ── -->
+  <div id="screen-home" class="screen active">
+    <div class="logo-wrap">
+      <div class="logo-main">The Afterparty Pack</div>
+      <div class="logo-sub">✦ party games for people who stayed ✦</div>
+    </div>
 
-<!-- ======================================================
-     HEADER
-====================================================== -->
-<div class="header">
-  <h1>UFLBarstool</h1>
-  <p>Official League Mobile App</p>
-</div>
+    <div class="card card-glow" style="margin-top: 24px;">
+      <div class="flex gap-12" style="flex-direction: column;">
+        <div>
+          <label>Your Name</label>
+          <input type="text" id="home-name" placeholder="Enter your name..." maxlength="20">
+        </div>
+        <div class="flex gap-12 mt-8" style="flex-wrap: wrap;">
+          <button class="btn btn-primary btn-lg" style="flex: 1; min-width: 160px;" onclick="showCreateRoom()">🎉 Host a Game</button>
+          <button class="btn btn-secondary btn-lg" style="flex: 1; min-width: 160px;" onclick="showJoinRoom()">🔑 Join with Code</button>
+        </div>
+      </div>
+    </div>
 
-<!-- ======================================================
-     PAGES
-====================================================== -->
-<div class="pages">
-
-<!-- ================= HOME ================= -->
-<div class="page active" id="home">
-  <div class="section-title">Upcoming Events</div>
-
-  <div class="card-ui">
-    <strong>UFL Week 10</strong>
-    <p>Saturday • 7:30 PM ET</p>
+    <div class="game-grid">
+      <div class="game-card">
+        <span class="game-emoji">🔥</span>
+        <div class="game-name">Roast Bot</div>
+        <div class="game-desc">Write the funniest roast about a randomly generated character</div>
+      </div>
+      <div class="game-card">
+        <span class="game-emoji">🎯</span>
+        <div class="game-name">Hot Take Bingo</div>
+        <div class="game-desc">Submit spicy opinions. Mark your card when you agree</div>
+      </div>
+      <div class="game-card">
+        <span class="game-emoji">🤥</span>
+        <div class="game-name">Finish My Lie</div>
+        <div class="game-desc">Complete a real fact with a convincing fake ending</div>
+      </div>
+      <div class="game-card">
+        <span class="game-emoji">🕵️</span>
+        <div class="game-name">Alibi</div>
+        <div class="game-desc">One player must explain themselves. Everyone else interrogates</div>
+      </div>
+    </div>
   </div>
 
-  <div class="card-ui">
-    <strong>Championship Media Day</strong>
-    <p>Press + Interviews</p>
+  <!-- ── JOIN SCREEN ── -->
+  <div id="screen-join" class="screen">
+    <div class="logo-wrap">
+      <div class="logo-main" style="font-size: 56px;">Join Game</div>
+    </div>
+    <div class="card card-glow">
+      <div class="flex gap-12 flex-col">
+        <div>
+          <label>Room Code</label>
+          <input type="text" id="join-code" placeholder="e.g. XKCD" maxlength="4" style="text-transform:uppercase; font-size:28px; letter-spacing:0.3em; text-align:center;">
+        </div>
+        <div>
+          <label>Your Name</label>
+          <input type="text" id="join-name" placeholder="Enter your name..." maxlength="20">
+        </div>
+        <div id="join-error" class="alert alert-danger" style="display:none;"></div>
+        <div class="flex gap-12" style="flex-wrap: wrap;">
+          <button class="btn btn-primary btn-lg" style="flex:1;" onclick="joinRoom()">Join Party 🚀</button>
+          <button class="btn btn-secondary" onclick="showHome()">← Back</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="section-title">League Feed</div>
-
-  <div class="card-ui">
-    <strong>Week 9 Recap</strong>
-    <p>Playoff picture tightens</p>
+  <!-- ── CREATE ROOM SCREEN ── -->
+  <div id="screen-create" class="screen">
+    <div class="logo-wrap">
+      <div class="logo-main" style="font-size: 56px;">Pick a Game</div>
+    </div>
+    <div class="game-grid" id="game-picker">
+      <div class="game-card" data-game="roast_bot" onclick="selectGame(this, 'roast_bot')">
+        <span class="game-emoji">🔥</span>
+        <div class="game-name">Roast Bot</div>
+        <div class="game-desc">Write the funniest roast. Votes = points.</div>
+      </div>
+      <div class="game-card" data-game="hot_take_bingo" onclick="selectGame(this, 'hot_take_bingo')">
+        <span class="game-emoji">🎯</span>
+        <div class="game-name">Hot Take Bingo</div>
+        <div class="game-desc">Spicy opinions + bingo card chaos.</div>
+      </div>
+      <div class="game-card" data-game="finish_my_lie" onclick="selectGame(this, 'finish_my_lie')">
+        <span class="game-emoji">🤥</span>
+        <div class="game-name">Finish My Lie</div>
+        <div class="game-desc">Real fact, fake ending. Fool the room.</div>
+      </div>
+      <div class="game-card" data-game="alibi" onclick="selectGame(this, 'alibi')">
+        <span class="game-emoji">🕵️</span>
+        <div class="game-name">Alibi</div>
+        <div class="game-desc">Get interrogated. Try not to crack.</div>
+      </div>
+    </div>
+    <div id="create-error" class="alert alert-danger" style="display:none;"></div>
+    <div class="flex gap-12" style="flex-wrap: wrap;">
+      <button class="btn btn-primary btn-lg" style="flex:1;" id="create-btn" onclick="createRoom()" disabled>Create Room 🎉</button>
+      <button class="btn btn-secondary" onclick="showHome()">← Back</button>
+    </div>
   </div>
 
-  <div class="card-ui">
-    <strong>Power Rankings</strong>
-    <p>Top 3 unchanged</p>
-  </div>
-</div>
+  <!-- ── LOBBY SCREEN ── -->
+  <div id="screen-lobby" class="screen">
+    <div class="card card-glow" id="lobby-code-wrap">
+      <div class="room-code-display">
+        <div class="room-code-label">Room Code — share this!</div>
+        <div class="room-code-value" id="lobby-code">----</div>
+        <div class="room-url">Go to <strong>afterparty.fun</strong> and enter the code</div>
+      </div>
+    </div>
 
-<!-- ================= STATS ================= -->
-<div class="page" id="stats">
-  <div class="section-title">League Leaders</div>
+    <div class="card">
+      <div class="flex" style="align-items:center; justify-content:space-between; margin-bottom: 14px;">
+        <h3>Players</h3>
+        <div class="flex gap-8" style="align-items:center;">
+          <div class="pulse-dot"></div>
+          <span class="text-muted" id="lobby-count" style="font-size:13px;">Waiting...</span>
+        </div>
+      </div>
+      <div class="player-list" id="lobby-players"></div>
+    </div>
 
-  <div class="card-ui row-ui">
-    <span>Passing Yards</span><span class="text-gray-400">QB #12</span>
-  </div>
+    <div id="lobby-host-controls" style="display:none;">
+      <button class="btn btn-primary btn-lg btn-full" id="start-btn" onclick="startGame()">
+        Start Game ▶
+      </button>
+      <div class="alert alert-info mt-8">You're the host. Players can still join after you start!</div>
+    </div>
 
-  <div class="card-ui row-ui">
-    <span>Rushing TDs</span><span class="text-gray-400">RB #22</span>
-  </div>
-
-  <div class="card-ui row-ui">
-    <span>Total Defense</span><span class="text-gray-400">Steel City</span>
-  </div>
-
-  <div class="section-title">Team Stats</div>
-
-  <div class="card-ui row-ui">
-    <span>Points / Game</span><span class="text-gray-400">27.8</span>
-  </div>
-
-  <div class="card-ui row-ui">
-    <span>Turnovers</span><span class="text-gray-400">+6</span>
-  </div>
-</div>
-
-<!-- ================= EVENTS ================= -->
-<div class="page" id="events">
-  <div class="section-title">Past Events</div>
-
-  <div class="card-ui">
-    <strong>Week 9</strong>
-    <p>Attendance: 20,014</p>
+    <div id="lobby-waiting" style="display:none;">
+      <div class="waiting-animation">
+        <div class="waiting-dot"></div>
+        <div class="waiting-dot"></div>
+        <div class="waiting-dot"></div>
+      </div>
+      <div class="text-center text-muted">Waiting for the host to start the game...</div>
+    </div>
   </div>
 
-  <div class="card-ui">
-    <strong>Rivalry Night</strong>
-    <p>Highest ratings</p>
+  <!-- ── GAME SCREEN ── -->
+  <div id="screen-game" class="screen">
+    <div class="flex" style="align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+      <div>
+        <div id="game-phase-badge" class="phase-badge phase-playing">Playing</div>
+        <h2 id="game-title" style="font-size: 28px;"></h2>
+      </div>
+      <div style="text-align:right;">
+        <div class="section-label">Round</div>
+        <div style="font-family:'Bebas Neue'; font-size:36px; color: var(--accent2);" id="round-display">1 / 3</div>
+      </div>
+    </div>
+
+    <div id="game-content"></div>
+
+    <!-- Host controls -->
+    <div id="host-game-controls" style="display:none; margin-top: 16px;">
+      <hr class="divider">
+      <div class="flex gap-12" style="flex-wrap: wrap;">
+        <button class="btn btn-secondary btn-sm" onclick="hostAdvanceVoting()">⏭ Force Voting</button>
+        <button class="btn btn-secondary btn-sm" onclick="hostNextRound()">⏩ Next Round</button>
+      </div>
+    </div>
   </div>
 
-  <div class="section-title">Schedule Archive</div>
-
-  <div class="card-ui row-ui">
-    <span>Week 8</span><span class="text-gray-400">Complete</span>
+  <!-- ── RESULTS SCREEN ── -->
+  <div id="screen-results" class="screen">
+    <div class="logo-wrap">
+      <div class="logo-main" style="font-size: 56px;">Round Results</div>
+    </div>
+    <div class="card card-glow" id="results-content"></div>
+    <div class="card" id="scoreboard-card">
+      <h3 class="mb-8">Scoreboard</h3>
+      <div id="scoreboard-list"></div>
+    </div>
+    <div id="results-host-controls" style="display:none; margin-top:16px;">
+      <button class="btn btn-primary btn-lg btn-full" id="next-round-btn" onclick="hostNextRound()">Next Round →</button>
+    </div>
+    <div id="results-waiting" class="alert alert-info mt-8" style="display:none;">Waiting for host to advance...</div>
   </div>
 
-  <div class="card-ui row-ui">
-    <span>Week 7</span><span class="text-gray-400">Complete</span>
+  <!-- ── FINAL SCREEN ── -->
+  <div id="screen-final" class="screen">
+    <div class="logo-wrap">
+      <div class="logo-main">Game Over!</div>
+      <div class="logo-sub">✦ the votes are in ✦</div>
+    </div>
+    <div class="card card-glow" id="final-winner"></div>
+    <div class="card">
+      <h3 class="mb-8">Final Standings</h3>
+      <div id="final-scoreboard"></div>
+    </div>
+    <button class="btn btn-teal btn-lg btn-full mt-16" onclick="showHome()">Play Again 🎉</button>
   </div>
-</div>
-
-<!-- ================= AWARDS ================= -->
-<div class="page" id="awards">
-  <div class="section-title">Weekly Awards</div>
-
-  <div class="card-ui">
-    <strong>MVP</strong>
-    <p>QB #12 • 5 TDs</p>
-  </div>
-
-  <div class="card-ui">
-    <strong>Defensive Player</strong>
-    <p>LB #54 • 14 Tackles</p>
-  </div>
-
-  <div class="section-title">Season Honors</div>
-
-  <div class="flex gap-2 flex-wrap">
-    <span class="badge-ui">Offensive POTY</span>
-    <span class="badge-ui">Defensive POTY</span>
-    <span class="badge-ui">Coach of Year</span>
-  </div>
-</div>
-
-<!-- ================= PROFILE ================= -->
-<div class="page" id="profile">
-  <div class="section-title">User Profile</div>
-
-  <div class="card-ui">
-    <strong>Guest Fan</strong>
-    <p>Not Logged In</p>
-  </div>
-
-  <div class="section-title">Preferences</div>
-
-  <div class="card-ui row-ui">
-    <span>Notifications</span><span class="text-gray-400">Enabled</span>
-  </div>
-
-  <div class="card-ui row-ui">
-    <span>Theme</span><span class="text-gray-400">Dark</span>
-  </div>
-
-  <div class="section-title">Loading Preview</div>
-  <div class="skeleton w-full"></div>
-  <div class="skeleton w-3/4"></div>
-  <div class="skeleton w-1/2"></div>
-</div>
-
-</div>
-
-<!-- ======================================================
-     TAB BAR
-====================================================== -->
-<div class="tabbar">
-  <button class="active" onclick="go('home',this)"><span>🏠</span>Home</button>
-  <button onclick="go('stats',this)"><span>📊</span>Stats</button>
-  <button onclick="go('events',this)"><span>📅</span>Events</button>
-  <button onclick="go('awards',this)"><span>🏆</span>Awards</button>
-  <button onclick="go('profile',this)"><span>👤</span>Profile</button>
-</div>
 
 </div>
 
 <script>
-function go(id,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-  document.getElementById(id).classList.add('active')
-  document.querySelectorAll('.tabbar button').forEach(b=>b.classList.remove('active'))
-  btn.classList.add('active')
-}
-</script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+// Update this to your deployed worker URL
+const API = 'https://twest.reaai.workers.dev/';
 
+// ── STATE ───────────────────────────────────────────────────────────────────
+let state = {
+  playerId: null,
+  roomCode: null,
+  isHost: false,
+  room: null,
+  pollInterval: null,
+  markedBingoCells: new Set(),
+  selectedVote: null,
+  hasSubmitted: false,
+  hasVoted: false,
+  lastPhase: null,
+};
+
+// ── AVATAR COLORS ────────────────────────────────────────────────────────────
+const AVATAR_COLORS = [
+  '#ff3cac','#7b2fff','#00f5d4','#ffe600','#ff6b35','#00b4d8','#a3d977','#f72585'
+];
+
+function avatarColor(name) {
+  let hash = 0;
+  for (const c of name) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffffff;
+  return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+}
+
+// ── SCREEN MANAGEMENT ───────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(`screen-${id}`).classList.add('active');
+}
+
+function showHome() {
+  stopPolling();
+  state = { ...state, playerId: null, roomCode: null, isHost: false, room: null };
+  showScreen('home');
+}
+
+function showCreateRoom() {
+  const name = document.getElementById('home-name').value.trim();
+  if (!name) { alert('Enter your name first!'); return; }
+  showScreen('create');
+}
+
+function showJoinRoom() {
+  const name = document.getElementById('home-name').value.trim();
+  document.getElementById('join-name').value = name;
+  showScreen('join');
+}
+
+// ── GAME SELECTION ───────────────────────────────────────────────────────────
+let selectedGame = null;
+function selectGame(el, gameType) {
+  document.querySelectorAll('.game-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedGame = gameType;
+  document.getElementById('create-btn').disabled = false;
+}
+
+// ── API CALLS ────────────────────────────────────────────────────────────────
+async function api(path, method = 'GET', body = null) {
+  const opts = {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(`${API}${path}`, opts);
+  return res.json();
+}
+
+// ── CREATE ROOM ───────────────────────────────────────────────────────────────
+async function createRoom() {
+  const hostName = document.getElementById('home-name').value.trim();
+  if (!hostName || !selectedGame) return;
+
+  const btn = document.getElementById('create-btn');
+  btn.disabled = true; btn.textContent = 'Creating...';
+
+  try {
+    const data = await api('/api/rooms', 'POST', { hostName, gameType: selectedGame });
+    if (data.error) throw new Error(data.error);
+    state.playerId = data.hostId;
+    state.roomCode = data.room.code;
+    state.isHost = true;
+    state.room = data.room;
+    enterLobby(data.room);
+  } catch (e) {
+    document.getElementById('create-error').textContent = e.message;
+    document.getElementById('create-error').style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Create Room 🎉';
+  }
+}
+
+// ── JOIN ROOM ─────────────────────────────────────────────────────────────────
+async function joinRoom() {
+  const code = document.getElementById('join-code').value.trim().toUpperCase();
+  const name = document.getElementById('join-name').value.trim() || document.getElementById('home-name').value.trim();
+  const errEl = document.getElementById('join-error');
+  errEl.style.display = 'none';
+
+  if (!code || code.length !== 4) { errEl.textContent = 'Enter a 4-letter code'; errEl.style.display='block'; return; }
+  if (!name) { errEl.textContent = 'Enter your name'; errEl.style.display='block'; return; }
+
+  try {
+    const data = await api(`/api/rooms/${code}/join`, 'POST', { playerName: name });
+    if (data.error) throw new Error(data.error);
+    state.playerId = data.playerId;
+    state.roomCode = code;
+    state.isHost = false;
+    state.room = data.room;
+    enterLobby(data.room);
+  } catch (e) {
+    errEl.textContent = e.message; errEl.style.display='block';
+  }
+}
+
+// ── LOBBY ─────────────────────────────────────────────────────────────────────
+function enterLobby(room) {
+  state.room = room;
+  document.getElementById('lobby-code').textContent = room.code;
+  renderLobby(room);
+  showScreen('lobby');
+  startPolling();
+}
+
+function renderLobby(room) {
+  const list = document.getElementById('lobby-players');
+  list.innerHTML = room.players.map(p => `
+    <div class="player-chip ${p.isHost ? 'host' : ''}">
+      <div class="player-avatar" style="background:${avatarColor(p.name)}; color:#0d0a14">${p.name[0].toUpperCase()}</div>
+      ${p.name}${p.isHost ? ' 👑' : ''}
+    </div>
+  `).join('');
+  document.getElementById('lobby-count').textContent = `${room.players.length} player${room.players.length !== 1 ? 's' : ''}`;
+
+  if (state.isHost) {
+    document.getElementById('lobby-host-controls').style.display = 'block';
+    document.getElementById('lobby-waiting').style.display = 'none';
+    document.getElementById('start-btn').disabled = room.players.length < 2;
+    document.getElementById('start-btn').textContent = room.players.length < 2 ? 'Need 2+ players ▶' : 'Start Game ▶';
+  } else {
+    document.getElementById('lobby-host-controls').style.display = 'none';
+    document.getElementById('lobby-waiting').style.display = 'block';
+  }
+}
+
+async function startGame() {
+  const data = await api(`/api/rooms/${state.roomCode}/start`, 'POST', { hostId: state.playerId });
+  if (data.error) { alert(data.error); return; }
+  handleRoomUpdate(data.room);
+}
+
+// ── POLLING ───────────────────────────────────────────────────────────────────
+function startPolling() {
+  stopPolling();
+  state.pollInterval = setInterval(poll, 2000);
+}
+
+function stopPolling() {
+  if (state.pollInterval) { clearInterval(state.pollInterval); state.pollInterval = null; }
+}
+
+async function poll() {
+  try {
+    const data = await api(`/api/rooms/${state.roomCode}`);
+    if (data.room) handleRoomUpdate(data.room);
+  } catch {}
+}
+
+function handleRoomUpdate(room) {
+  state.room = room;
+  const phaseChanged = state.lastPhase !== room.phase;
+  state.lastPhase = room.phase;
+
+  if (room.phase === 'lobby') {
+    if (document.getElementById('screen-lobby').classList.contains('active')) {
+      renderLobby(room);
+    }
+    return;
+  }
+
+  if (room.phase === 'finished') {
+    renderFinalScreen(room);
+    showScreen('final');
+    return;
+  }
+
+  if (room.phase === 'results') {
+    if (phaseChanged) showConfetti();
+    renderResultsScreen(room);
+    showScreen('results');
+    return;
+  }
+
+  // playing or voting
+  renderGameScreen(room);
+  if (!document.getElementById('screen-game').classList.contains('active')) {
+    showScreen('game');
+  }
+}
+
+// ── GAME SCREEN RENDERER ─────────────────────────────────────────────────────
+function renderGameScreen(room) {
+  const gameNames = {
+    roast_bot: '🔥 Roast Bot',
+    hot_take_bingo: '🎯 Hot Take Bingo',
+    finish_my_lie: '🤥 Finish My Lie',
+    alibi: '🕵️ Alibi',
+  };
+  document.getElementById('game-title').textContent = gameNames[room.gameType] || room.gameType;
+  document.getElementById('round-display').textContent = `${room.round} / ${room.maxRounds}`;
+
+  const badge = document.getElementById('game-phase-badge');
+  badge.className = `phase-badge phase-${room.phase}`;
+  badge.textContent = room.phase === 'playing' ? '● Answering' : '● Voting';
+
+  document.getElementById('host-game-controls').style.display = state.isHost ? 'block' : 'none';
+
+  const content = document.getElementById('game-content');
+
+  switch (room.gameType) {
+    case 'roast_bot': renderRoastBot(room, content); break;
+    case 'hot_take_bingo': renderHotTakeBingo(room, content); break;
+    case 'finish_my_lie': renderFinishMyLie(room, content); break;
+    case 'alibi': renderAlibi(room, content); break;
+  }
+}
+
+// ── ROAST BOT ─────────────────────────────────────────────────────────────────
+function renderRoastBot(room, el) {
+  const { target, submissions, votes } = room.gameState;
+  const isSelf = (id) => submissions.find(s => s.id === id && s.playerId === state.playerId);
+  const mySubmission = submissions.find(s => s.playerId === state.playerId);
+
+  if (room.phase === 'playing') {
+    const progress = submissions.length;
+    const total = room.players.length;
+    el.innerHTML = `
+      <div class="target-card">
+        <div class="section-label">Today's Roast Target</div>
+        <div class="target-name">${target.name}</div>
+        <div class="target-job">${target.job}</div>
+        <div class="target-quirk">"${target.quirk}"</div>
+      </div>
+      ${mySubmission ? `
+        <div class="alert alert-success">✓ Your roast is in! Waiting for others...</div>
+        <div class="submission-card" style="cursor:default;">
+          <div class="submission-text">${escHtml(mySubmission.content)}</div>
+        </div>
+      ` : `
+        <div class="card">
+          <label>Your roast of ${target.name}</label>
+          <textarea id="roast-input" placeholder="Write the most savage, funniest roast you can..." maxlength="280"></textarea>
+          <button class="btn btn-primary btn-full mt-12" onclick="submitRoast()">Submit Roast 🔥</button>
+        </div>
+      `}
+      <div class="progress-row">
+        <span>${progress}/${total} submitted</span>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${(progress/total)*100}%"></div></div>
+      </div>
+    `;
+  } else {
+    // Voting
+    const myVote = votes[state.playerId];
+    el.innerHTML = `
+      <div class="alert alert-info mb-8">Vote for the funniest roast! (You can't vote for yourself)</div>
+      ${submissions.map(s => `
+        <div class="submission-card ${myVote === s.id ? 'selected' : ''} ${s.playerId === state.playerId ? '' : ''}"
+             onclick="${s.playerId !== state.playerId ? `castVote('${s.id}')` : ''}">
+          <div class="submission-text">${escHtml(s.content)}</div>
+          <div class="submission-author">${s.playerName}${s.playerId === state.playerId ? ' (your roast)' : ''}</div>
+        </div>
+      `).join('')}
+      <div class="progress-row">
+        <span>${Object.keys(votes).length}/${room.players.length} voted</span>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${(Object.keys(votes).length/room.players.length)*100}%"></div></div>
+      </div>
+    `;
+  }
+}
+
+async function submitRoast() {
+  const content = document.getElementById('roast-input')?.value.trim();
+  if (!content) return;
+  await api(`/api/rooms/${state.roomCode}/submit`, 'POST', { playerId: state.playerId, content });
+  await poll();
+}
+
+// ── HOT TAKE BINGO ─────────────────────────────────────────────────────────────
+function renderHotTakeBingo(room, el) {
+  const { card, submitted, markedPlayers } = room.gameState;
+  const hasSubmitted = submitted.includes(state.playerId);
+
+  if (room.phase === 'playing') {
+    const cellsHtml = card.map((item, i) => `
+      <div class="bingo-cell ${state.markedBingoCells.has(i) ? 'marked' : ''}"
+           onclick="toggleBingo(${i}, this)">${escHtml(item)}</div>
+    `).join('');
+
+    el.innerHTML = `
+      <div class="alert alert-info mb-8">Mark cells you <strong>agree with</strong>. Then submit your hot take!</div>
+      <div class="bingo-grid">${cellsHtml}</div>
+      ${hasSubmitted ? `
+        <div class="alert alert-success">✓ Your take is in! Waiting for others...</div>
+      ` : `
+        <div class="card">
+          <label>Submit YOUR hot take (something not already on the card)</label>
+          <input type="text" id="take-input" placeholder="Unpopular opinion: ..." maxlength="120">
+          <button class="btn btn-primary btn-full mt-12" onclick="submitHotTake()">Drop My Take 🌶️</button>
+        </div>
+      `}
+      <div class="progress-row">
+        <span>${submitted.length}/${room.players.length} submitted</span>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${(submitted.length/room.players.length)*100}%"></div></div>
+      </div>
+    `;
+  } else {
+    // Voting — show each player's submitted take and let others vote
+    const allSubmissions = room.gameState.submissions || [];
+    const myVote = room.gameState.votes?.[state.playerId];
+    el.innerHTML = `
+      <div class="alert alert-info mb-8">Vote for the hottest take!</div>
+      ${allSubmissions.length === 0
+        ? '<div class="text-muted text-center">No external takes submitted this round — host can advance.</div>'
+        : allSubmissions.map(s => `
+        <div class="submission-card ${myVote === s.id ? 'selected' : ''}"
+             onclick="${s.playerId !== state.playerId ? `castVote('${s.id}')` : ''}">
+          <div class="submission-text">${escHtml(s.content)}</div>
+          <div class="submission-author">${s.playerName}${s.playerId === state.playerId ? ' (yours)' : ''}</div>
+        </div>
+      `).join('')}
+    `;
+  }
+}
+
+function toggleBingo(idx, el) {
+  if (state.markedBingoCells.has(idx)) {
+    state.markedBingoCells.delete(idx);
+    el.classList.remove('marked');
+  } else {
+    state.markedBingoCells.add(idx);
+    el.classList.add('marked');
+  }
+}
+
+async function submitHotTake() {
+  const content = document.getElementById('take-input')?.value.trim();
+  if (!content) return;
+  await api(`/api/rooms/${state.roomCode}/submit`, 'POST', { playerId: state.playerId, content });
+  await poll();
+}
+
+// ── FINISH MY LIE ─────────────────────────────────────────────────────────────
+function renderFinishMyLie(room, el) {
+  const { prompt, submissions, votes } = room.gameState;
+  const mySubmission = submissions?.find(s => s.playerId === state.playerId);
+
+  if (room.phase === 'playing') {
+    const progress = (submissions || []).length;
+    el.innerHTML = `
+      <div class="fact-display">
+        <div class="fact-tag">✦ Real Fact</div>
+        <strong>${escHtml(prompt.fact)}</strong>
+      </div>
+      <div class="alert alert-warn mb-8">
+        But wait — the ending was cut off! Write a fake ending that sounds believable. The most convincing lie wins!
+      </div>
+      ${mySubmission ? `
+        <div class="alert alert-success">✓ Your lie is in! Waiting for others...</div>
+        <div class="submission-card" style="cursor:default;">
+          <div class="submission-text">"...${escHtml(mySubmission.content)}"</div>
+        </div>
+      ` : `
+        <div class="card">
+          <label>Finish the fact with a convincing lie...</label>
+          <textarea id="lie-input" placeholder="Write your convincing fake ending here..." maxlength="200"></textarea>
+          <button class="btn btn-primary btn-full mt-12" onclick="submitLie()">Submit My Lie 🤥</button>
+        </div>
+      `}
+      <div class="progress-row">
+        <span>${progress}/${room.players.length} submitted</span>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${(progress/room.players.length)*100}%"></div></div>
+      </div>
+    `;
+  } else {
+    const myVote = votes?.[state.playerId];
+    el.innerHTML = `
+      <div class="fact-display">
+        <div class="fact-tag">✦ Real Fact (ending hidden)</div>
+        <strong>${escHtml(prompt.fact)}</strong>
+      </div>
+      <div class="alert alert-info mb-8">Which ending do you think is the REAL one?</div>
+      ${(submissions || []).map(s => `
+        <div class="submission-card ${myVote === s.id ? 'selected' : ''}"
+             onclick="${s.playerId !== state.playerId ? `castVote('${s.id}')` : ''}">
+          <div class="submission-text">"...${escHtml(s.content)}"</div>
+          <div class="submission-author">${s.playerId === state.playerId ? 'Your answer' : s.playerName}</div>
+        </div>
+      `).join('')}
+      <div class="progress-row">
+        <span>${Object.keys(votes || {}).length}/${room.players.length} voted</span>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${(Object.keys(votes||{}).length/room.players.length)*100}%"></div></div>
+      </div>
+    `;
+  }
+}
+
+async function submitLie() {
+  const content = document.getElementById('lie-input')?.value.trim();
+  if (!content) return;
+  await api(`/api/rooms/${state.roomCode}/submit`, 'POST', { playerId: state.playerId, content });
+  await poll();
+}
+
+// ── ALIBI ─────────────────────────────────────────────────────────────────────
+function renderAlibi(room, el) {
+  const { crime, suspectId, questions, answers, alibi, votes } = room.gameState;
+  const isSuspect = state.playerId === suspectId;
+  const suspect = room.players.find(p => p.id === suspectId);
+
+  if (room.phase === 'playing') {
+    if (isSuspect) {
+      el.innerHTML = `
+        <div class="alert alert-danger mb-8" style="font-size: 18px; font-weight: 700;">
+          🚨 YOU are the suspect!
+        </div>
+        <div class="crime-card">
+          <div class="crime-label">The Alleged Crime</div>
+          <div class="crime-text">${escHtml(crime.crime)}</div>
+          <div class="crime-meta">Time: ${crime.time} · Location: ${crime.location}</div>
+        </div>
+        <div class="alert alert-warn">Come up with your alibi. Others will ask you questions — you must answer them!</div>
+        ${alibi ? `
+          <div class="alert alert-success">✓ Alibi submitted. Answer the questions below.</div>
+          <div class="card"><div class="submission-text">"${escHtml(alibi)}"</div></div>
+        ` : `
+          <div class="card">
+            <label>Your Alibi (where were you?)</label>
+            <textarea id="alibi-input" placeholder="Explain where you were and what you were doing..." maxlength="280"></textarea>
+            <button class="btn btn-danger btn-full mt-12" onclick="submitAlibi()">Submit My Alibi 🙏</button>
+          </div>
+        `}
+        ${questions.length > 0 ? `
+          <h3 style="margin-top:20px; margin-bottom:10px;">Questions for You</h3>
+          ${questions.map(q => {
+            const myAns = answers[q.id];
+            return `
+              <div class="question-item">
+                <div class="question-q">❓ ${escHtml(q.question)}</div>
+                ${myAns
+                  ? `<div class="question-a">→ ${escHtml(myAns)}</div>`
+                  : `<div class="flex gap-8 mt-8">
+                      <input type="text" id="ans-${q.id}" placeholder="Answer..." style="margin-top:0">
+                      <button class="btn btn-primary btn-sm" onclick="answerQuestion('${q.id}')">Answer</button>
+                    </div>`
+                }
+              </div>
+            `;
+          }).join('')}
+        ` : ''}
+      `;
+    } else {
+      el.innerHTML = `
+        <div class="crime-card">
+          <div class="crime-label">The Crime</div>
+          <div class="crime-text">${escHtml(crime.crime)}</div>
+          <div class="crime-meta">Time: ${crime.time} · Location: ${crime.location}</div>
+        </div>
+        <div class="alert alert-info">
+          <strong>${suspect?.name}</strong> is the suspect! Ask them questions, then you'll vote on whether their alibi holds up.
+        </div>
+        ${alibi ? `
+          <div class="card">
+            <div class="section-label">${suspect?.name}'s Alibi</div>
+            <div class="fact-display" style="margin:8px 0;">"${escHtml(alibi)}"</div>
+          </div>
+        ` : `<div class="alert alert-warn">Waiting for ${suspect?.name} to submit their alibi...</div>`}
+        ${questions.length > 0 ? `
+          <h3 style="margin-top:16px; margin-bottom:8px;">Interrogation Log</h3>
+          ${questions.map(q => {
+            const ans = answers[q.id];
+            const asker = room.players.find(p => p.id === q.playerId);
+            return `
+              <div class="question-item">
+                <div class="question-q">❓ <strong>${asker?.name}</strong>: ${escHtml(q.question)}</div>
+                ${ans ? `<div class="question-a">→ ${escHtml(ans)}</div>` : `<div class="question-a" style="opacity:0.4">Awaiting answer...</div>`}
+              </div>
+            `;
+          }).join('')}
+        ` : ''}
+        <div class="card mt-12">
+          <label>Ask ${suspect?.name} a question</label>
+          <div class="flex gap-8 mt-8">
+            <input type="text" id="question-input" placeholder="Where exactly were you? Who can verify?" maxlength="150" style="margin-top:0">
+            <button class="btn btn-primary btn-sm" onclick="submitQuestion()">Ask</button>
+          </div>
+        </div>
+      `;
+    }
+  } else {
+    // Voting
+    const myVote = votes?.[state.playerId];
+    el.innerHTML = `
+      <div class="crime-card">
+        <div class="crime-label">The Crime</div>
+        <div class="crime-text">${escHtml(crime.crime)}</div>
+      </div>
+      ${alibi ? `<div class="fact-display">"${escHtml(alibi)}"</div>` : ''}
+      ${isSuspect ? `
+        <div class="alert alert-danger">They're voting on whether your alibi holds up... 😬</div>
+        <div class="waiting-animation"><div class="waiting-dot"></div><div class="waiting-dot"></div><div class="waiting-dot"></div></div>
+      ` : `
+        <div class="alert alert-info mb-8">Is <strong>${suspect?.name}</strong>'s alibi believable?</div>
+        <div class="flex gap-12" style="flex-wrap: wrap;">
+          <div class="submission-card ${myVote === 'guilty' ? 'selected' : ''} ${myVote === 'guilty' ? '' : ''}"
+               style="flex:1; min-width: 140px; text-align:center;"
+               onclick="castVote('${suspectId}')">
+            <div style="font-size:32px;">🧐</div>
+            <div style="font-weight:700; margin-top:8px;">GUILTY</div>
+            <div style="font-size:12px; color:var(--muted);">They did it</div>
+          </div>
+          <div class="submission-card ${myVote === 'innocent' ? 'selected' : ''}"
+               style="flex:1; min-width: 140px; text-align:center;"
+               onclick="castVote('innocent')">
+            <div style="font-size:32px;">😇</div>
+            <div style="font-weight:700; margin-top:8px;">INNOCENT</div>
+            <div style="font-size:12px; color:var(--muted);">Alibi checks out</div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span>${Object.keys(votes || {}).length}/${room.players.filter(p => p.id !== suspectId).length} voted</span>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${(Object.keys(votes||{}).length/Math.max(1,room.players.filter(p=>p.id!==suspectId).length))*100}%"></div></div>
+        </div>
+      `}
+    `;
+  }
+}
+
+async function submitAlibi() {
+  const content = document.getElementById('alibi-input')?.value.trim();
+  if (!content) return;
+  await api(`/api/rooms/${state.roomCode}/submit`, 'POST', { playerId: state.playerId, content });
+  await poll();
+}
+
+async function submitQuestion() {
+  const question = document.getElementById('question-input')?.value.trim();
+  if (!question) return;
+  await api(`/api/rooms/${state.roomCode}/ask`, 'POST', { playerId: state.playerId, question });
+  document.getElementById('question-input').value = '';
+  await poll();
+}
+
+async function answerQuestion(questionId) {
+  const el = document.getElementById(`ans-${questionId}`);
+  const answer = el?.value.trim();
+  if (!answer) return;
+  // Store answer in game state via a generic submit or a dedicated endpoint
+  await api(`/api/rooms/${state.roomCode}/submit`, 'POST', {
+    playerId: state.playerId,
+    content: answer,
+    questionId, // Backend needs to handle this
+  });
+  await poll();
+}
+
+// ── VOTING ────────────────────────────────────────────────────────────────────
+async function castVote(targetId) {
+  if (!targetId) return;
+  await api(`/api/rooms/${state.roomCode}/vote`, 'POST', { playerId: state.playerId, targetId });
+  await poll();
+}
+
+// ── HOST CONTROLS ─────────────────────────────────────────────────────────────
+async function hostAdvanceVoting() {
+  await api(`/api/rooms/${state.roomCode}/advance-voting`, 'POST', { hostId: state.playerId });
+  await poll();
+}
+
+async function hostNextRound() {
+  await api(`/api/rooms/${state.roomCode}/next`, 'POST', { hostId: state.playerId });
+  await poll();
+}
+
+// ── RESULTS SCREEN ─────────────────────────────────────────────────────────────
+function renderResultsScreen(room) {
+  const content = document.getElementById('results-content');
+  const { gameState } = room;
+
+  let html = '';
+
+  if (room.gameType === 'roast_bot' || room.gameType === 'finish_my_lie') {
+    const { submissions, tally, winnerId } = gameState;
+    const winner = submissions?.find(s => s.id === winnerId);
+    if (winner) {
+      html = `
+        <h3 class="mb-8 text-yellow">🏆 Round Winner</h3>
+        <div class="submission-card winner" style="cursor:default;">
+          <div class="submission-text">${escHtml(winner.content)}</div>
+          <div class="submission-author" style="color:var(--accent4); font-weight:700;">— ${winner.playerName}</div>
+          <div class="vote-count">+${(tally?.[winnerId] || 0) * 100} pts</div>
+        </div>
+        <div class="mt-12">
+          ${(submissions || []).map(s => `
+            <div class="score-row">
+              <div class="score-name">${s.playerName}</div>
+              <div class="score-pts">${(tally?.[s.id] || 0)} vote${(tally?.[s.id] || 0) !== 1 ? 's' : ''}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+  }
+
+  if (room.gameType === 'alibi') {
+    const { crime, suspectId, guessedCorrectly } = gameState;
+    const suspect = room.players.find(p => p.id === suspectId);
+    const caught = guessedCorrectly >= Math.ceil(room.players.filter(p => p.id !== suspectId).length / 2);
+    html = `
+      <h3 class="mb-8">${caught ? '🚔 Caught!' : '🏃 Got Away!'}</h3>
+      <div class="crime-card">
+        <div class="crime-text">${escHtml(crime.crime)}</div>
+      </div>
+      <div class="alert ${caught ? 'alert-danger' : 'alert-success'}" style="margin-top:12px; font-size:16px;">
+        ${caught
+          ? `${suspect?.name} was <strong>caught</strong>! ${guessedCorrectly} player${guessedCorrectly !== 1 ? 's' : ''} saw through the alibi.`
+          : `${suspect?.name} <strong>got away with it!</strong> Only ${guessedCorrectly} player${guessedCorrectly !== 1 ? 's' : ''} guessed correctly.`
+        }
+      </div>
+    `;
+  }
+
+  if (room.gameType === 'hot_take_bingo') {
+    html = `<h3>🌶️ Hot Takes Round Complete!</h3><div class="mt-8 text-muted">Check the scoreboard for standings.</div>`;
+  }
+
+  content.innerHTML = html;
+
+  // Scoreboard
+  const sorted = [...room.players].sort((a, b) => b.score - a.score);
+  document.getElementById('scoreboard-list').innerHTML = sorted.map((p, i) => `
+    <div class="score-row">
+      <div class="score-rank ${i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : ''}">#${i + 1}</div>
+      <div class="player-avatar" style="background:${avatarColor(p.name)}; color:#0d0a14; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;">${p.name[0].toUpperCase()}</div>
+      <div class="score-name">${p.name}${p.id === state.playerId ? ' (you)' : ''}</div>
+      <div class="score-pts">${p.score}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('results-host-controls').style.display = state.isHost ? 'block' : 'none';
+  document.getElementById('results-waiting').style.display = state.isHost ? 'none' : 'block';
+  const nextBtn = document.getElementById('next-round-btn');
+  if (nextBtn) {
+    nextBtn.textContent = room.round >= room.maxRounds ? 'See Final Results 🏆' : 'Next Round →';
+  }
+}
+
+// ── FINAL SCREEN ──────────────────────────────────────────────────────────────
+function renderFinalScreen(room) {
+  const sorted = [...room.players].sort((a, b) => b.score - a.score);
+  const winner = sorted[0];
+
+  document.getElementById('final-winner').innerHTML = `
+    <div class="text-center">
+      <div style="font-size: 64px;">🏆</div>
+      <h2 class="text-yellow" style="font-size: 48px; margin-top: 8px;">${winner.name} WINS!</h2>
+      <div class="text-muted mt-8">${winner.score} points</div>
+    </div>
+  `;
+
+  document.getElementById('final-scoreboard').innerHTML = sorted.map((p, i) => `
+    <div class="score-row">
+      <div class="score-rank ${i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : ''}">#${i + 1}</div>
+      <div class="player-avatar" style="background:${avatarColor(p.name)}; color:#0d0a14; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;">${p.name[0].toUpperCase()}</div>
+      <div class="score-name">${p.name}${p.id === state.playerId ? ' (you)' : ''}</div>
+      <div class="score-pts">${p.score}</div>
+    </div>
+  `).join('');
+
+  showConfetti();
+}
+
+// ── CONFETTI ──────────────────────────────────────────────────────────────────
+function showConfetti() {
+  const colors = ['#ff3cac','#7b2fff','#00f5d4','#ffe600','#ff6b35'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const div = document.createElement('div');
+      div.className = 'confetti-piece';
+      div.style.left = Math.random() * 100 + 'vw';
+      div.style.background = colors[Math.floor(Math.random() * colors.length)];
+      div.style.animationDuration = (2 + Math.random() * 2) + 's';
+      div.style.animationDelay = Math.random() * 0.5 + 's';
+      div.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(div);
+      div.addEventListener('animationend', () => div.remove());
+    }, i * 30);
+  }
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function escHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Enter to join
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const active = document.querySelector('.screen.active');
+    if (active?.id === 'screen-join') joinRoom();
+    if (active?.id === 'screen-home') {
+      if (document.getElementById('home-name').value.trim()) showCreateRoom();
+    }
+  }
+});
+
+// Auto-fill name across screens
+document.getElementById('home-name').addEventListener('input', e => {
+  document.getElementById('join-name').value = e.target.value;
+});
+</script>
 </body>
 </html>
